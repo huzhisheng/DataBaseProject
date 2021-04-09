@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}修改视频{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block main %}
+<h3 class="page-title" style="text-align:center">视频标题：{{ video.video_title }}</h3>
+<p class="question-info" style="text-align:center;margin-top:20px;">
+    <span>视频创建时间:{{ video.video_ctime }}</span>
+    <span>视频上次修改时间:{{ video.video_mtime }}</span>
+</p>
+<hr>
+<p>视频简介:</p>
+<p class="question-content">{{ video.video_comment }}</p>
+<hr>
+
+<hr>
+<p>视频旧url:{{ video.video_url }}</p>
+<hr>
+
+<form action="" method="post">
+    <div class="form-container" style="width:500px;margin:0 auto;text-align:right;">
+        <p>(不修改的地方空着就行)</p>
+        <div class="form-group">
+            <input type="text" placeholder="新视频标题" name="video_title" class="form-control">
+        </div>
+        <div class="form-group">
+            <textarea name="video_comment" rows="6" class="form-control" placeholder="新视频简介"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="text" placeholder="新视频url" name="video_url" class="form-control">
+        </div>
+        <input type="hidden" name="video_id" value="{{ video.video_id }}">
+        <div class="form-group">
+            <button class="btn btn-primary">提交</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

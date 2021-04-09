@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}个人主页{% endblock %}
+
+{% block main %}
+<a href="{{ url_for('my_watch_history') }}">观看历史</a>
+<a href="{{ url_for('my_subscribes') }}">关注列表</a>
+<a href="{{ url_for('my_fans') }}">粉丝列表</a>
+<a href="{{ url_for('my_star_list') }}">我的收藏</a>
+<a href="{{ url_for('my_msg_list') }}">消息列表</a>
+<a href="{{ url_for('my_video_list') }}">我的作品</a>
+<a href="{{ url_for('my_video_make') }}">发布作品</a>
+
+<hr/>
+<p>名称: {{user.user_name}}</p>
+<p>粉丝数: {{user.user_fans}}</p>
+<p>用户名: {{user.user_account}}</p>
+<p>注册时间: {{user.user_date}}</p>
+{% endblock %}
