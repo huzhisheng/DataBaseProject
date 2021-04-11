@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ other_user.user_name }}的主页{% endblock %}
+
+{% block main %}
+<a href="{{ url_for('other_video_list', other_user_id = other_user.user_id) }}">Ta的作品</a>
+<a href="{{ url_for('follow_user', other_user_id = other_user.user_id) }}">点击关注</a>
+<a href="{{ url_for('my_msg', friend_id = other_user.user_id) }}">发送私信</a>
+
+<hr/>
+<p>名称: {{other_user.user_name}}</p>
+<p>粉丝数: {{other_user.user_fans}}</p>
+<p>用户名: {{other_user.user_account}}</p>
+<p>注册时间: {{other_user.user_date}}</p>
+
+{% endblock %}

@@ -13,7 +13,7 @@
         </div>
         <div class="question-group" style="float:left;width:660px;margin-left:10px;">
             <p class="question-title" style="color:#259;font-weight:900;">
-                {{ user.user_name }}
+                <a href="{{ url_for('other_homepage', other_user_id = user.user_id) }}">{{ user.user_name }}</a>
             </p>
         </div>
     </li>

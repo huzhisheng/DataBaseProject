@@ -7,7 +7,9 @@
 {% block main %}
     <h3 class="page-title" style="text-align:center">{{ video.video_title }}</h3>
     <p class="question-info" style="text-align:center;margin-top:20px;">
-        <span>作者:{{ video.video_author.user_name }}</span>
+        <span>
+            作者:<a href="{{ url_for('other_homepage', other_user_id = video.video_author.user_id) }}">{{ video.video_author.user_name }}</a>
+        </span>
         <span>时间:{{ video.video_ctime }}</span>
     </p>
     <hr>

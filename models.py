@@ -114,7 +114,7 @@ class MusicInfo(db.Model):
 # 定义私聊消息模型
 class MsgInfo(db.Model):
     __tablename__='msg_info'
-    msg_time = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    msg_time = db.Column(db.DateTime, primary_key=True, nullable=False, default=datetime.now())
     msg_text = db.Column(db.String(256), nullable=False)
 
     user_id = db.Column(db.Integer,db.ForeignKey('user_info.user_id'), primary_key=True, nullable=False)
