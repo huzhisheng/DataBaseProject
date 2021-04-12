@@ -10,6 +10,9 @@ from datetime import datetime
 from sqlalchemy import and_,or_
 import os
 import time
+import random
+
+random.seed(datetime.now())
 
 # 首页函数
 @home.route('/')
@@ -228,7 +231,6 @@ def video_modify():
     else:
         video_new_title = request.form.get('video_title')
         video_new_comment = request.form.get('video_comment')
-        video_new_url = request.form.get('video_url')
         video_id = request.form.get('video_id')
         video_mtime = datetime.now()
         video = VideoInfo.query.filter(VideoInfo.video_id == video_id).first()
@@ -236,8 +238,6 @@ def video_modify():
             video.video_title = video_new_title
         if video_new_comment != "":
             video.video_comment = video_new_comment
-        if video_new_url != "":
-            video.video_url = video_new_url
         video.video_mtime = video_mtime
         db.session.commit()
         return redirect(url_for('home.my_video_list'))
@@ -436,4 +436,15 @@ def video_square():
     return render_template('home/video_square.html',videos = videos)
         
 
-
+# 下一个视频
+@home.route('/next_video/')
+def next_video():
+    # 从数据库中随机选一个已有的video返回即可
+    video_list = VideoInfo.query.all()
+    if len(video_list) == 0:
+        return redirect(url_for('home.index'))
+    next_video = random.choice(video_list)
+    if next_video:
+        return redirect(url_for('home.detail', video_id = next_video.video_id))
+    else:
+        return redirect(url_for('home.index'))

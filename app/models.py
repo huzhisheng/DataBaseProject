@@ -81,9 +81,14 @@ class VideoInfo(db.Model):
     video_author = db.relationship("UserInfo", backref="user_articles")
 
     img_id = db.Column(db.Integer,db.ForeignKey('img_info.img_id'), default=1)
-    video_poster = db.relationship("ImgInfo", backref="img_articles")
+    # 删除时要连带所有封面也被删除 -- 已被验证成功
+    video_poster = db.relationship("ImgInfo", backref="img_article", uselist=False, cascade="all, delete-orphan", single_parent=True)
+    # 删除时要连带所有观看记录也删除 -- 已被验证成功
+    video_watchers = db.relationship("WatchRelation", backref="watch_video", cascade="all, delete-orphan")
+    # 删除视频时要连带其所有评论也被删除 -- 已被验证成功
+    video_reviews = db.relationship("ReviewInfo", backref="review_video", cascade="all, delete-orphan")
 
-
+    
 # 定义视频评论模型
 class ReviewInfo(db.Model):
     __tablename__='review_info'
@@ -96,7 +101,6 @@ class ReviewInfo(db.Model):
     user_id = db.Column(db.Integer,db.ForeignKey('user_info.user_id'), nullable=False)
     review_author = db.relationship("UserInfo", backref="user_reviews")
     video_id = db.Column(db.Integer,db.ForeignKey('video_info.video_id'), nullable=False)
-    review_video = db.relationship("VideoInfo", backref="video_reviews")
 
 # 定义私聊消息模型
 class MsgInfo(db.Model):
@@ -126,7 +130,7 @@ class WatchRelation(db.Model):
     video_id = db.Column(db.Integer,db.ForeignKey('video_info.video_id'), nullable=False, primary_key=True)
 
     watch_user = db.relationship("UserInfo", backref="user_watchs")
-    watch_video = db.relationship("VideoInfo", backref="video_watchers")
+    
 
 # 定义收藏记录模型
 class StarRelation(db.Model):

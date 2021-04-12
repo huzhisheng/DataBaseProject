@@ -64,3 +64,35 @@ def delete_user():
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for('admin.manage_user'))
+
+# 查看视频列表
+@admin.route('/manage_video/')
+@admin_required
+def manage_video():
+    return render_template('admin/manage_video.html', video_list = VideoInfo.query.all())
+
+# 删除一个视频
+@admin.route('/delete_video/')
+@admin_required
+def delete_video():
+    video_id = request.args.get('video_id')
+    video = VideoInfo.query.filter(VideoInfo.video_id == video_id).first()
+    db.session.delete(video)
+    db.session.commit()
+    return redirect(url_for('admin.manage_video'))
+
+# 查看图片列表
+@admin.route('/manage_img/')
+@admin_required
+def manage_img():
+    return render_template('admin/manage_img.html', img_list = ImgInfo.query.all())
+
+# 删除一个图片
+@admin.route('/delete_img/')
+@admin_required
+def delete_img():
+    img_id = request.args.get('img_id')
+    img = ImgInfo.query.filter(ImgInfo.img_id == img_id).first()
+    db.session.delete(img)
+    db.session.commit()
+    return redirect(url_for('admin.manage_img'))

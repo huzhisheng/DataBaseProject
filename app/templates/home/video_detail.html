@@ -14,14 +14,21 @@
     <span>时间:{{ video.video_ctime }}</span>
 </p>
 <hr>
-<p>简介:</p>
-<p class="question-content">{{ video.video_comment }}</p>
-<hr>
+
+<nav aria-label="...">
+    <ul class="pager">
+        <li class="previous"><a href="{{ url_for('home.next_video') }}"><span aria-hidden="true">&larr;</span>下一个视频</a></li>
+        <li class="next"><a href="{{ url_for('home.next_video') }}">下一个视频<span aria-hidden="true">&rarr;</span></a></li>
+    </ul>
+</nav>
 <p align="center">
     <video width="800" height="600" controls="controls" style="margin:0 auto;">
         <source src="{{ url_for('home.uploaded_file', file_name = video.video_url) }}" type="video/mp4" />
     </video>
 </p>
+<h4>简介:</h4>
+<p class="question-content">{{ video.video_comment }}</p>
+<hr>
 
 
 <h4>点赞:</h4>

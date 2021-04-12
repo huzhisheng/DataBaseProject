@@ -1,0 +1,22 @@
+{% extends "admin/base.html" %}
+{% block main %}
+<table class="table table-striped">
+    <caption>视频信息</caption>
+    <thead>
+        <tr>
+            <th>文件名称</th>
+            <th>关联的视频</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for img in img_list %}
+        <tr>
+            <td>{{ img.img_url }}</td>
+            <td>{{ img.img_article.video_title }}</td>
+            <td><a href="{{ url_for('admin.delete_img', img_id = img.img_id) }}">删除</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
