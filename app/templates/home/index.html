@@ -10,8 +10,9 @@
             <a href="{{ url_for('home.detail', video_id = video.video_id) }}"><img class="img-rounded" width="300" height="100" src="{{ url_for('static', filename = 'posters/'+video.video_poster.img_url) }}"/></a>
             <div class="caption">
                 <h3>{{ video.video_title }}</h3>
-                <p>简介:{{ video.video_comment }}</p>
-                作者:{{ video.video_author.user_name }}
+                <div style="text-overflow: ellipsis;white-space: nowrap;overflow:hidden;">简介:{{ video.video_comment }}</div>
+                <div>作者:{{ video.video_author.user_name }}</div>
+                <div>点赞数:{{ video.video_nlike }}</div>
             </div>
         </div>
     </div>

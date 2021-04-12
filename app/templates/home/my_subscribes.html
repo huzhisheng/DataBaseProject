@@ -9,7 +9,13 @@
         我关注的UP主
     </p>
     {% for user in famous_user_list %}
-    <a class="list-group-item" href="{{ url_for('home.other_homepage', other_user_id = user.user_id) }}">{{ user.user_name }}</a>
+    <div class="list-group-item">
+        <a href="{{ url_for('home.other_homepage', other_user_id = user.user_id) }}">{{ user.user_name }}</a>
+        <span style="float:right">
+            <a href="{{ url_for('home.delete_famous_user', famous_user_id = user.user_id) }}">删除</a>
+        </span>
+    </div>
+    
     {% endfor %}
 </div>
 

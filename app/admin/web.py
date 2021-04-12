@@ -85,14 +85,41 @@ def delete_video():
 @admin.route('/manage_img/')
 @admin_required
 def manage_img():
-    return render_template('admin/manage_img.html', img_list = ImgInfo.query.all())
+    img_list = ImgInfo.query.all()
+    for img in img_list:
+        if img.img_video:
+            print(img.img_video[0].video_title)
+    return render_template('admin/manage_img.html', img_list = img_list)
 
-# 删除一个图片
-@admin.route('/delete_img/')
+# 查看视频评论列表
+@admin.route('/manage_review/')
 @admin_required
-def delete_img():
-    img_id = request.args.get('img_id')
-    img = ImgInfo.query.filter(ImgInfo.img_id == img_id).first()
-    db.session.delete(img)
+def manage_review():
+    return render_template('admin/manage_review.html', review_list = ReviewInfo.query.all())
+
+# 删除一个视频评论
+@admin.route('/delete_review/')
+@admin_required
+def delete_review():
+    review_id = request.args.get('review_id')
+    review = ReviewInfo.query.filter(ReviewInfo.review_id == review_id).first()
+    db.session.delete(review)
     db.session.commit()
-    return redirect(url_for('admin.manage_img'))
+    return redirect(url_for('admin.manage_review'))
+
+# 查看消息列表
+@admin.route('/manage_msg/')
+@admin_required
+def manage_msg():
+    return render_template('admin/manage_msg.html', msg_list = MsgInfo.query.all())
+
+# 删除一条消息
+@admin.route('/delete_msg/')
+@admin_required
+def delete_msg():
+    msg_id = request.args.get('msg_id')
+    msg = MsgInfo.query.filter(MsgInfo.msg_id == msg_id).first()
+    db.session.delete(msg)
+    db.session.commit()
+    return redirect(url_for('admin.manage_msg'))
+

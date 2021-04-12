@@ -448,3 +448,25 @@ def next_video():
         return redirect(url_for('home.detail', video_id = next_video.video_id))
     else:
         return redirect(url_for('home.index'))
+
+# 删除观看记录
+@home.route('/delete_watch')
+@login_required
+def delete_watch():
+    video_id = request.args.get('video_id')
+    user_id = request.args.get('user_id')
+    watch = WatchRelation.query.filter(WatchRelation.user_id==user_id, WatchRelation.video_id==video_id).first()
+    db.session.delete(watch)
+    db.session.commit()
+    return redirect(url_for('home.my_watch_history'))
+
+# 取消一个关注
+@home.route('/delete_famous_user')
+@login_required
+def delete_famous_user():
+    famous_user_id = request.args.get('famous_user_id')
+    fans_user_id = session['user_id']
+    fans_record = FansRelation.query.filter(FansRelation.fans_user_id==fans_user_id, FansRelation.famous_user_id==famous_user_id).first()
+    db.session.delete(fans_record)
+    db.session.commit()
+    return redirect(url_for('home.my_subscribes'))

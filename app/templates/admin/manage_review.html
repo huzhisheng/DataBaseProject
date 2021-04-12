@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+{% block main %}
+<table class="table table-striped">
+    <caption>评论信息</caption>
+    <thead>
+        <tr>
+            <th>评论时间</th>
+            <th>评论内容</th>
+            <th>评论视频id</th>
+            <th>评论用户id</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for review in review_list %}
+        <tr>
+            <td>{{ review.review_time }}</td>
+            <td>{{ review.review_text }}</td>
+            <td>{{ review.review_video.video_id }}</td>
+            <td>{{ review.review_author.user_id }}</td>
+            <td><a href="{{ url_for('admin.delete_review', review_id = review.review_id) }}">删除</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

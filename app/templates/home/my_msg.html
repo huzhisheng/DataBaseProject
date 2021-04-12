@@ -17,7 +17,7 @@
 
 {% for msg in msg_list %}
 {% if msg.msg_sender.user_id == user.user_id %}
-<div class="panel panel-success">
+<div class="panel panel-success" style="text-align: right;">
     <div class="panel-heading">
         <h3 class="panel-title">{{ msg.msg_sender.user_name }}</h3>
     </div>

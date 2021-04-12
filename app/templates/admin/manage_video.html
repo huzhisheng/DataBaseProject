@@ -4,9 +4,10 @@
     <caption>视频信息</caption>
     <thead>
         <tr>
+            <th>视频id</th>
             <th>视频标题</th>
             <th>视频简介</th>
-            <th>视频作者</th>
+            <th>视频作者id</th>
             <th>视频点赞数</th>
             <th> </th>
         </tr>
@@ -14,9 +15,10 @@
     <tbody>
         {% for video in video_list %}
         <tr>
+            <td>{{ video.video_id }}</td>
             <td>{{ video.video_title }}</td>
             <td>{{ video.video_comment }}</td>
-            <td>{{ video.video_author.user_name }}</td>
+            <td>{{ video.video_author.user_id }}</td>
             <td>{{ video.video_nlike }}</td>
             <td><a href="{{ url_for('admin.delete_video', video_id = video.video_id) }}">删除</a></td>
         </tr>

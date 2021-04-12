@@ -82,7 +82,7 @@ class VideoInfo(db.Model):
 
     img_id = db.Column(db.Integer,db.ForeignKey('img_info.img_id'), default=1)
     # 删除时要连带所有封面也被删除 -- 已被验证成功
-    video_poster = db.relationship("ImgInfo", backref="img_article", uselist=False, cascade="all, delete-orphan", single_parent=True)
+    video_poster = db.relationship("ImgInfo", backref="img_video", uselist=False, cascade="all, delete-orphan", single_parent=True)
     # 删除时要连带所有观看记录也删除 -- 已被验证成功
     video_watchers = db.relationship("WatchRelation", backref="watch_video", cascade="all, delete-orphan")
     # 删除视频时要连带其所有评论也被删除 -- 已被验证成功

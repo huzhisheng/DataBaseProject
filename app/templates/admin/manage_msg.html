@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+{% block main %}
+<table class="table table-striped">
+    <caption>私聊信息</caption>
+    <thead>
+        <tr>
+            <th>发送时间</th>
+            <th>私聊内容</th>
+            <th>发送者id</th>
+            <th>接受者id</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for msg in msg_list %}
+        <tr>
+            <td>{{ msg.msg_time }}</td>
+            <td>{{ msg.msg_text }}</td>
+            <td>{{ msg.msg_sender.user_id }}</td>
+            <td>{{ msg.msg_receiver.user_id }}</td>
+            <td><a href="{{ url_for('admin.delete_msg', msg_id = msg.msg_id) }}">删除</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

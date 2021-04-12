@@ -4,6 +4,7 @@
     <caption>用户账号信息</caption>
     <thead>
         <tr>
+            <th>用户id</th>
             <th>用户名称</th>
             <th>账号</th>
             <th>密码</th>
@@ -13,6 +14,7 @@
     <tbody>
         {% for user in user_list %}
         <tr>
+            <td>{{ user.user_id }}</td>
             <td>{{ user.user_name }}</td>
             <td>{{ user.user_account }}</td>
             <td>{{ user.user_pass }}</td>

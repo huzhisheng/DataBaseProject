@@ -11,7 +11,10 @@
     {% for i in range(size) %}
     <div class="list-group-item">
         <a href="{{ url_for('home.detail',video_id = video_list[i].video_id) }}">{{ video_list[i].video_title }}</a>
-        <p>{{ watch_relation_list[i].watch_time }}</p>
+        <div>
+            {{ watch_relation_list[i].watch_time }}<span style="float:right">
+                <a href="{{ url_for('home.delete_watch', user_id = watch_relation_list[i].user_id, video_id = watch_relation_list[i].video_id) }}">删除</a></span>
+        </div>     
     </div>
     {% endfor %}
 </div>
