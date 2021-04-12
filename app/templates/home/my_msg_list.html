@@ -1,0 +1,16 @@
+{% extends 'home/my_base.html' %}
+
+{% block title %}私聊列表{% endblock %}
+
+{% block my_main %}
+
+<div class="list-group">
+    <p href="#" class="list-group-item active">
+        消息面板
+    </p>
+    {% for friend in friends %}
+    <a class="list-group-item" href="{{ url_for('home.my_msg',friend_id=friend.user_id) }}">与{{ friend.user_name }}的聊天</a>
+    {% endfor %}
+</div>
+
+{% endblock %}

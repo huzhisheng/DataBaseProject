@@ -1,0 +1,20 @@
+{% extends 'home/my_base.html' %}
+
+{% block title %}收藏夹列表{% endblock %}
+
+{% block my_main %}
+
+<div class="list-group">
+    <p href="#" class="list-group-item active">
+        我的收藏夹
+    </p>
+    {% for star in star_list %}
+    <a class="list-group-item" href="{{ url_for('home.my_star',star_id=star.star_id) }}">{{ star.star_name }}</a>
+    {% endfor %}
+</div>
+
+<button class="btn btn-default">
+    <a href="{{ url_for('home.my_star_make') }}">创建收藏夹</a>
+</button>
+
+{% endblock %}

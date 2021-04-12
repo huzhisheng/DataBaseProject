@@ -1,0 +1,22 @@
+{% extends 'home/my_base.html' %}
+
+{% block title %}收藏夹{% endblock %}
+
+{% block my_main %}
+<div class="list-group">
+    <p href="#" class="list-group-item active">
+        收藏夹{{ star_name }}中的视频
+    </p>
+    {% for i in range(list_size) %}
+    <div class="list-group-item">
+        <p><a href="{{ url_for('home.detail', video_id = video_list[i].video_id) }}">{{ video_list[i].video_title }}</a></p>
+        <p>
+            收藏时间:{{ time_list[i] }}
+        </p>
+        <div>
+            <a href="{{ url_for('home.unstar',star_id = star_id, video_id = video_list[i].video_id) }}">取消收藏</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

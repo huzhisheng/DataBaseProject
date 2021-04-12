@@ -1,0 +1,45 @@
+{% extends 'home/my_base.html' %}
+
+{% block title %}私聊窗口{% endblock %}
+
+{% block my_main %}
+<h4>发送私信:</h4>
+<form action="{{ url_for('home.send_msg') }}" method="post">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="" name="msg_text">
+        <input type="hidden" name="receiver_id" value="{{ other_user.user_id }}">
+    </div>
+    <div class="form-group" style="text-align:right;">
+        <button class="btn btn-primary">发送</button>
+    </div>
+</form>
+
+
+{% for msg in msg_list %}
+{% if msg.msg_sender.user_id == user.user_id %}
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ msg.msg_sender.user_name }}</h3>
+    </div>
+    <div class="panel-body">
+        {{ msg.msg_text }}
+        <br>
+        {{ msg.msg_time }}
+    </div>
+</div>
+{% else %}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ msg.msg_sender.user_name }}</h3>
+    </div>
+    <div class="panel-body">
+        {{ msg.msg_text }}
+        <br>
+        {{ msg.msg_time }}
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+
+
+{% endblock %}

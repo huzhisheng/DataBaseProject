@@ -1,0 +1,32 @@
+{% extends "admin/admin.html" %}
+{% block admin %}
+<div class="row">
+    <div class="col-xs-3">
+        <ul class="nav nav-pills nav-stacked" id="my_nav">
+            <li role="presentation"><a href="{{ url_for('admin.manage_user') }}">用户列表</a></li>
+            <li role="presentation"><a href="#">我的帖子</a></li>
+            <li role="presentation"><a href="#">申请记录</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-9">
+        {% block main %} {% endblock %}
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+      // each 是 为每一个匹配的元素 执行定义的方法
+      $("#my_nav").find("li").each(function () {
+        var a = $(this).find("a:first")[0];
+        // location.pathname 获取 当前浏览器上的url 地址
+        if ($(a).attr("href") === location.pathname) {
+          $(this).addClass("active");
+        } else {
+          $(this).removeClass("active");
+        }
+      });
+
+    });
+  </script>
+{% endblock %}

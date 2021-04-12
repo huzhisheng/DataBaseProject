@@ -1,0 +1,14 @@
+{% extends "admin/admin.html" %}
+{% block admin %}
+    <form style="width:300px;" action="" method="POST">
+        <div class="form-group">
+            <span class="glyphicon glyphicon-user"></span>
+            <input type="text" id="exampleInputEmail1" placeholder="AdminAccount" name="admin_account">
+        </div>
+        <div class="form-group">
+            <span class="glyphicon glyphicon-lock"></span>
+            <input type="password" id="exampleInputPassword1" placeholder="AdminPassword" name="admin_password">
+        </div>
+        <button type="submit" class="btn btn-default">登录</button>
+    </form>
+{% endblock %}

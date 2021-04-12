@@ -1,0 +1,39 @@
+{% extends 'home/base.html' %}
+
+
+
+{% block main %}
+
+<ul class="nav nav-tabs" id="homepage_nav">
+    <li><a href="{{ url_for('home.my_watch_history') }}">观看历史</a></li>
+    <li><a href="{{ url_for('home.my_subscribes') }}">关注列表</a></li>
+    <li><a href="{{ url_for('home.my_fans') }}">粉丝列表</a></li>
+    <li><a href="{{ url_for('home.my_star_list') }}">我的收藏</a></li>
+    <li><a href="{{ url_for('home.my_msg_list') }}">消息列表</a></li>
+    <li><a href="{{ url_for('home.my_video_list') }}">我的作品</a></li>
+    <li><a href="{{ url_for('home.my_video_make') }}">发布作品</a></li>
+</ul>
+
+
+
+<script>
+    $(document).ready(function () {
+        // each 是 为每一个匹配的元素 执行定义的方法
+        $("#homepage_nav").find("li").each(function () {
+            var a = $(this).find("a:first")[0];
+            // location.pathname 获取 当前浏览器上的url 地址
+            if ($(a).attr("href") === location.pathname) {
+                $(this).addClass("active");
+            } else {
+                $(this).removeClass("active");
+            }
+        });
+
+    });
+</script>
+
+{% block my_main %}{% endblock %}
+
+
+
+{% endblock %}

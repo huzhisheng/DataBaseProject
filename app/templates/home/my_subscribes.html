@@ -1,0 +1,16 @@
+{% extends 'home/my_base.html' %}
+
+{% block title %}关注列表{% endblock %}
+
+{% block my_main %}
+
+<div class="list-group">
+    <p href="#" class="list-group-item active">
+        我关注的UP主
+    </p>
+    {% for user in famous_user_list %}
+    <a class="list-group-item" href="{{ url_for('home.other_homepage', other_user_id = user.user_id) }}">{{ user.user_name }}</a>
+    {% endfor %}
+</div>
+
+{% endblock %}

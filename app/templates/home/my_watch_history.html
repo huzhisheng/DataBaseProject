@@ -1,0 +1,19 @@
+{% extends 'home/my_base.html' %}
+
+{% block title %}观看历史记录{% endblock %}
+
+{% block my_main %}
+
+<div class="list-group">
+    <p href="#" class="list-group-item active">
+        观看历史
+    </p>
+    {% for i in range(size) %}
+    <div class="list-group-item">
+        <a href="{{ url_for('home.detail',video_id = video_list[i].video_id) }}">{{ video_list[i].video_title }}</a>
+        <p>{{ watch_relation_list[i].watch_time }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

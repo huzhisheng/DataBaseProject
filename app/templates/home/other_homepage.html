@@ -1,0 +1,12 @@
+{% extends 'home/other_base.html' %}
+
+{% block title %}{{ other_user.user_name }}的主页{% endblock %}
+
+{% block other_main %}
+<hr>
+<p>名称: {{other_user.user_name}}</p>
+<p>粉丝数: {{other_user.user_fans}}</p>
+<p>用户名: {{other_user.user_account}}</p>
+<p>注册时间: {{other_user.user_date}}</p>
+
+{% endblock %}

@@ -4,11 +4,7 @@ from flask_migrate import Migrate,MigrateCommand
 # from Flask_Project import zlktqa
 # from Flask_Project import exts
 # from Flask_Project import models
-from web import app
-from exts import db
-from models import like_relation_table,bgm_relation_table
-from models import UserInfo,ImgInfo,VideoInfo,ReviewInfo,MusicInfo,MsgInfo,StarInfo,WatchRelation,StarRelation,FansRelation
-
+from app import app,db
 
 manager=Manager(app)
 

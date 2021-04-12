@@ -1,0 +1,22 @@
+{% extends 'home/other_base.html' %}
+
+{% block title %}{{ other_user.user_name }}的作品{% endblock %}
+
+{% block other_main %}
+
+<div class="row">
+    {% for video in videos %}
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <a href="{{ url_for('home.detail', video_id = video.video_id) }}"><img class="img-rounded" width="300" height="100" src="{{ url_for('static', filename = 'posters/'+video.video_poster.img_url) }}"/></a>
+            <div class="caption">
+                <h3>{{ video.video_title }}</h3>
+                <p>简介:{{ video.video_comment }}</p>
+                <p>创建时间:{{ video.video_ctime }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

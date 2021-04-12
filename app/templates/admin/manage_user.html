@@ -1,0 +1,24 @@
+{% extends "admin/base.html" %}
+{% block main %}
+<table class="table table-striped">
+    <caption>用户账号信息</caption>
+    <thead>
+        <tr>
+            <th>用户名称</th>
+            <th>账号</th>
+            <th>密码</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in user_list %}
+        <tr>
+            <td>{{ user.user_name }}</td>
+            <td>{{ user.user_account }}</td>
+            <td>{{ user.user_pass }}</td>
+            <td><a href="{{ url_for('admin.delete_user', user_id = user.user_id) }}">删除</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

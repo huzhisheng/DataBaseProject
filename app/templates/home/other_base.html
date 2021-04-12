@@ -1,0 +1,35 @@
+{% extends 'home/base.html' %}
+
+
+
+{% block main %}
+
+<ul class="nav nav-tabs" id="other_homepage_nav">
+    <li><a href="{{ url_for('home.other_video_list', other_user_id = other_user.user_id) }}">Ta的作品</a></li>
+    <li><a href="{{ url_for('home.follow_user', other_user_id = other_user.user_id) }}">点击关注</a></li>
+    <li><a href="{{ url_for('home.my_msg', friend_id = other_user.user_id) }}">发送私信</a></li>
+</ul>
+
+
+
+<script>
+    $(document).ready(function () {
+        // each 是 为每一个匹配的元素 执行定义的方法
+        $("#other_homepage_nav").find("li").each(function () {
+            var a = $(this).find("a:first")[0];
+            // location.pathname 获取 当前浏览器上的url 地址
+            if ($(a).attr("href") === location.pathname) {
+                $(this).addClass("active");
+            } else {
+                $(this).removeClass("active");
+            }
+        });
+
+    });
+</script>
+
+{% block other_main %}{% endblock %}
+
+
+
+{% endblock %}
