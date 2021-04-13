@@ -16,9 +16,11 @@
         <tr>
             <td>{{ msg.msg_time }}</td>
             <td>{{ msg.msg_text }}</td>
-            <td>{{ msg.msg_sender.user_id }}</td>
-            <td>{{ msg.msg_receiver.user_id }}</td>
-            <td><a href="{{ url_for('admin.delete_msg', msg_id = msg.msg_id) }}">删除</a></td>
+            <td>{{ msg.sender_id }}</td>
+            <td>{{ msg.receiver_id }}</td>
+            <td>
+                <a href="{{ url_for('admin.delete_msg', sender_id = msg.sender_id, receiver_id = msg.receiver_id, msg_time = msg.msg_time) }}">删除</a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

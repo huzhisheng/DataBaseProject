@@ -93,7 +93,6 @@ class VideoInfo(db.Model):
 class ReviewInfo(db.Model):
     __tablename__='review_info'
     review_id = db.Column(db.Integer, primary_key=True,autoincrement=True,nullable=False)
-    rev_review_id = db.Column(db.Integer, default=-1)
     review_text = db.Column(db.String(256), nullable=False)
     review_type = db.Column(db.Integer, default=-1)
     review_time = db.Column(db.DateTime, nullable=False, default=datetime.now())
@@ -108,10 +107,10 @@ class MsgInfo(db.Model):
     msg_time = db.Column(db.DateTime, primary_key=True, nullable=False, default=datetime.now())
     msg_text = db.Column(db.String(256), nullable=False)
 
-    user_id = db.Column(db.Integer,db.ForeignKey('user_info.user_id'), primary_key=True, nullable=False)
-    msg_sender = db.relationship("UserInfo", backref="user_send_msgs", foreign_keys=[user_id])
-    use_user_id = db.Column(db.Integer,db.ForeignKey('user_info.user_id'), primary_key=True, nullable=False)
-    msg_receiver = db.relationship("UserInfo", backref="user_receive_msgs", foreign_keys=[use_user_id])
+    sender_id = db.Column(db.Integer,db.ForeignKey('user_info.user_id'), primary_key=True, nullable=False)
+    msg_sender = db.relationship("UserInfo", backref="user_send_msgs", foreign_keys=[sender_id])
+    receiver_id = db.Column(db.Integer,db.ForeignKey('user_info.user_id'), primary_key=True, nullable=False)
+    msg_receiver = db.relationship("UserInfo", backref="user_receive_msgs", foreign_keys=[receiver_id])
 
 # 定义收藏夹模型
 class StarInfo(db.Model):

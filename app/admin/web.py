@@ -117,8 +117,10 @@ def manage_msg():
 @admin.route('/delete_msg/')
 @admin_required
 def delete_msg():
-    msg_id = request.args.get('msg_id')
-    msg = MsgInfo.query.filter(MsgInfo.msg_id == msg_id).first()
+    sender_id = request.args.get('sender_id')
+    receiver_id = request.args.get('receiver_id')
+    msg_time = request.args.get('msg_time')
+    msg = MsgInfo.query.filter(MsgInfo.sender_id==sender_id, MsgInfo.receiver_id==receiver_id, MsgInfo.msg_time==msg_time).first()
     db.session.delete(msg)
     db.session.commit()
     return redirect(url_for('admin.manage_msg'))

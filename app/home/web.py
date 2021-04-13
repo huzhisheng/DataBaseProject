@@ -260,12 +260,12 @@ def my_msg_list():
     user_id = session['user_id']
     # 先从所有涉及到当前用户的消息取出来，再从中取出所有朋友的user_id到list中
     friend_ids = set()
-    msgs = MsgInfo.query.filter(or_(MsgInfo.user_id == user_id, MsgInfo.use_user_id == user_id)).all()
+    msgs = MsgInfo.query.filter(or_(MsgInfo.sender_id == user_id, MsgInfo.receiver_id == user_id)).all()
     for msg in msgs:
-        if(msg.user_id != user_id):
-            friend_ids.add(msg.user_id)
+        if(msg.sender_id != user_id):
+            friend_ids.add(msg.sender_id)
         else:
-            friend_ids.add(msg.use_user_id)
+            friend_ids.add(msg.receiver_id)
     friend_ids = list(friend_ids)
     # 获取所有朋友UserInfo
     friends = UserInfo.query.filter(UserInfo.user_id.in_(friend_ids)).all()
@@ -277,7 +277,7 @@ def my_msg_list():
 def my_msg(friend_id):
     user_id = session['user_id']
     other_user = UserInfo.query.filter(UserInfo.user_id == friend_id).first()
-    msg_list = MsgInfo.query.filter(or_(and_(MsgInfo.user_id == user_id, MsgInfo.use_user_id == friend_id), and_(MsgInfo.user_id == friend_id, MsgInfo.use_user_id == user_id))).order_by(db.desc(MsgInfo.msg_time)).all()
+    msg_list = MsgInfo.query.filter(or_(and_(MsgInfo.sender_id == user_id, MsgInfo.receiver_id == friend_id), and_(MsgInfo.sender_id == friend_id, MsgInfo.receiver_id == user_id))).order_by(db.desc(MsgInfo.msg_time)).all()
     return render_template('home/my_msg.html', msg_list = msg_list, other_user = other_user)
 
 # 全部收藏夹页面
@@ -410,7 +410,7 @@ def send_msg():
     msg_time = datetime.now()
     sender_id = session['user_id']
 
-    new_msg = MsgInfo(msg_text = msg_text, msg_time = msg_time, user_id = sender_id, use_user_id = receiver_id)
+    new_msg = MsgInfo(msg_text = msg_text, msg_time = msg_time, sender_id = sender_id, receiver_id = receiver_id)
     db.session.add(new_msg)
     db.session.commit()
     return redirect(url_for('home.my_msg',friend_id = receiver_id))
