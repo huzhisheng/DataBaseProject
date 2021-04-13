@@ -15,5 +15,6 @@ migrate=Migrate(app,db)
 manager.add_command('db',MigrateCommand)
 
 if __name__=='__main__':
+    # 启动服务器
     manager.run()
 

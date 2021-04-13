@@ -94,6 +94,16 @@ def my_context_processor():
             return {'user':user}
     return {}
 
+# 判断用户是否已点赞某个视频
+def has_liked(video_id, user_id):
+    # 使用原生sql语句
+    sql_query = "SELECT L.video_id FROM like_relation AS L WHERE L.video_id = %d and L.user_id = %d" % (video_id, user_id)
+    result = db.session.execute(sql_query)
+    result_list = result.fetchall()
+    if len(result_list) == 0:
+        return False
+    else:
+        return True
 
 # 视频播放页面
 @home.route('/detail/<video_id>/')
@@ -119,7 +129,12 @@ def detail(video_id):
 
             db.session.add(new_watch_record)
         db.session.commit()
-    return render_template('home/video_detail.html',video=video_model,stars=stars)
+    like_record = False
+    if session.get('user_id'):
+        user_id = session.get('user_id')
+        print(video_id, user_id)
+        like_record = has_liked(video_id=int(video_id), user_id=int(user_id))
+    return render_template('home/video_detail.html',video=video_model,stars=stars, like_record=like_record)
 
 # 添加评论函数
 @home.route('/add_review/',methods=['POST'])
@@ -153,6 +168,17 @@ def like_video():
     db.session.commit()
     return redirect(url_for('home.detail',video_id = video_id))
 
+# 取消点赞函数
+@home.route('/dislike_video/')
+@login_required
+def dislike_video():
+    video_id=request.args.get('video_id')
+    user_id=session['user_id']
+    sql_query = "DELETE FROM like_relation WHERE user_id = %d and video_id = %d" % (int(user_id), int(video_id))
+    # print(sql_query)
+    db.session.execute(sql_query)
+    db.session.commit()
+    return redirect(url_for('home.detail', video_id = video_id))
 # 收藏函数
 @home.route('/star_video/',methods=['POST'])
 @login_required
@@ -191,10 +217,10 @@ def my_video_make():
             upload_path = os.path.join(app.config['POSTER_UPLOAD_FOLDER'], img_url)
             video_poster.save(upload_path)
         img_info = ImgInfo(img_url = img_url)
-
+        # 事务机制
         db.session.add(img_info)
-        db.session.commit()
-        #print("图片id", img_info.img_id)
+        # db.session.commit()
+        # print("图片id", img_info.img_id)
 
         video_title = request.form.get('video_title')
         video_comment = request.form.get('video_comment')
@@ -209,7 +235,7 @@ def my_video_make():
         video.video_poster = img_info
         db.session.add(video)
         db.session.commit()
-        print('两个文件名', video_url, ' ', img_url)
+        # print('两个文件名', video_url, ' ', img_url)
         return redirect(url_for('home.my_video_list'))
 
 # 我的作品页面
@@ -426,12 +452,13 @@ def uploaded_file(file_name):
 @login_required
 def video_square():
     user_id = session['user_id']
+    # 使用原生sql语句
     sql_query = "SELECT V.video_id FROM fans_relation AS FR, video_info AS V WHERE FR.fans_user_id=%d and FR.famous_user_id=V.user_id ORDER BY V.video_ctime" % user_id
     result = db.session.execute(sql_query)
     video_ids = []
     for row in result.fetchall():
         video_ids.append(row[0])
-    print("id", video_ids)
+    # print("id", video_ids)
     videos = VideoInfo.query.filter(VideoInfo.video_id.in_(video_ids)).all()
     return render_template('home/video_square.html',videos = videos)
         

@@ -1,0 +1,3 @@
+trigger.sql中的代码是触发器；
+
+library.sql中含有一个非主属性的索引index_user_name，是根据用户信息中的非主属性用户名称user_name来建立的索引；

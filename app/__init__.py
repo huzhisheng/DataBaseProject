@@ -14,3 +14,5 @@ from app.admin import admin as admin_blueprint
 
 app.register_blueprint(home_blueprint)
 app.register_blueprint(admin_blueprint, url_prefix="/admin")
+
+

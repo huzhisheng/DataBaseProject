@@ -33,9 +33,15 @@
 
 <h4>点赞:</h4>
 <div style="text-align:right;">
+    {% if like_record %}
+    <a href="{{ url_for('home.dislike_video', video_id = video.video_id) }}">
+        <button type="button" class="btn btn-primary">取消点赞</button>
+    </a>
+    {% else %}
     <a href="{{ url_for('home.like_video', video_id = video.video_id) }}">
         <button type="button" class="btn btn-primary">点赞</button>
     </a>
+    {% endif %}
 </div>
 
 
