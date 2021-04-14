@@ -17,7 +17,7 @@ random.seed(datetime.now())
 # 首页函数
 @home.route('/')
 def index():
-    return render_template('home/index.html',videos = VideoInfo.query.all())
+    return render_template('home/index.html',videos = VideoInfo.query.order_by(db.desc(VideoInfo.video_nlike)).all())
 
 # 登录函数
 @home.route('/login/',methods=['GET','POST'])
@@ -216,26 +216,27 @@ def my_video_make():
         if video_poster:
             upload_path = os.path.join(app.config['POSTER_UPLOAD_FOLDER'], img_url)
             video_poster.save(upload_path)
-        img_info = ImgInfo(img_url = img_url)
-        # 事务机制
-        db.session.add(img_info)
-        # db.session.commit()
-        # print("图片id", img_info.img_id)
+        try:
+            img_info = ImgInfo(img_url = img_url)
+            # 事务机制
+            db.session.add(img_info)
+            db.session.flush()  # 新增img后使用db.session.flush()刷新获取img_id
 
-        video_title = request.form.get('video_title')
-        video_comment = request.form.get('video_comment')
-        video_ctime = datetime.now()
-        video_nlike = 0
-        img_id = img_info.img_id
-        user_id = session['user_id']
-        video_author = UserInfo.query.filter(UserInfo.user_id==user_id).first()
+            video_title = request.form.get('video_title')
+            video_comment = request.form.get('video_comment')
+            video_ctime = datetime.now()
+            video_nlike = 0
+            img_id = img_info.img_id
+            user_id = session['user_id']
+            video_author = UserInfo.query.filter(UserInfo.user_id==user_id).first()
 
-        video = VideoInfo(video_title=video_title, video_comment=video_comment, video_url=video_url, video_ctime=video_ctime, video_nlike=video_nlike, img_id=img_id)
-        video.video_author = video_author
-        video.video_poster = img_info
-        db.session.add(video)
-        db.session.commit()
-        # print('两个文件名', video_url, ' ', img_url)
+            video = VideoInfo(video_title=video_title, video_comment=video_comment, video_url=video_url, video_ctime=video_ctime, video_nlike=video_nlike, img_id=img_id)
+            video.video_author = video_author
+            video.video_poster = img_info
+            db.session.add(video)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
         return redirect(url_for('home.my_video_list'))
 
 # 我的作品页面

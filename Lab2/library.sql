@@ -1,8 +1,11 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2021-04-13 13:28:42                          */
+/* Created on:     2021-04-14 15:08:24                          */
 /*==============================================================*/
 
+
+drop
+table if exists viewUserStarVideo;
 
 drop
 table if exists viewAllVideoNameList;
@@ -29,9 +32,11 @@ drop table if exists star_info;
 
 drop table if exists star_relation;
 
-#drop index index_user_name on user_info;
+# drop index index_user_name on user_info;
 
 drop table if exists user_info;
+
+# drop index index_user_id on video_info;
 
 drop table if exists video_info;
 
@@ -166,6 +171,14 @@ create table video_info
 );
 
 /*==============================================================*/
+/* Index: index_user_id                                         */
+/*==============================================================*/
+create index index_user_id on video_info
+(
+   user_id
+);
+
+/*==============================================================*/
 /* Table: watch_relation                                        */
 /*==============================================================*/
 create table watch_relation
@@ -184,6 +197,7 @@ create VIEW  viewAllUserAndVideoList
 select
    U.user_id,
    U.user_name,
+   V.video_id,
    V.video_title
 from
    video_info V,
@@ -218,6 +232,25 @@ from
    video_info V
 order by
    V.video_id;
+
+/*==============================================================*/
+/* View: viewUserStarVideo                                      */
+/*==============================================================*/
+create VIEW  viewUserStarVideo
+ as
+select
+   U.user_id,
+   S.star_id,
+   SR.video_id
+from
+   user_info U,
+   star_info S,
+   star_relation SR
+where
+   U.user_id = S.user_id and
+   S.star_id = SR.star_id
+order by
+   U.user_id;
 
 alter table fans_relation add constraint FK_fans_relation foreign key (fans_user_id)
       references user_info (user_id) on delete restrict on update restrict;

@@ -14,11 +14,15 @@
     <tbody>
         {% for user in user_list %}
         <tr>
-            <td>{{ user.user_id }}</td>
-            <td>{{ user.user_name }}</td>
-            <td>{{ user.user_account }}</td>
-            <td>{{ user.user_pass }}</td>
-            <td><a href="{{ url_for('admin.delete_user', user_id = user.user_id) }}">删除</a></td>
+            <form action="" method="POST">
+                <td>{{ user.user_id }}</td>
+                <input type="hidden" value="{{ user.user_id }}" name="user_id">
+                <td><input type="text" class="form-control" value="{{ user.user_name }}" name="user_name"></td>
+                <td>{{ user.user_account }}</td>
+                <td><input type="text" class="form-control" value="{{ user.user_pass }}" name="user_pass"></td>
+                <td><button type="submit" class="btn btn-default">修改</button></td>
+            </form>
+
         </tr>
         {% endfor %}
     </tbody>

@@ -50,20 +50,25 @@ def logout():
     return redirect(url_for('admin.login'))
 
 # 查看用户列表
-@admin.route('/manage_user/')
+@admin.route('/manage_user/', methods = ['GET', 'POST'])
 @admin_required
 def manage_user():
-    return render_template('admin/manage_user.html', user_list = UserInfo.query.all())
+    if request.method == 'GET':
+        return render_template('admin/manage_user.html', user_list = UserInfo.query.all())
+    else:
+        # 修改一位用户
+        user_id = request.form.get('user_id')
+        user_name = request.form.get('user_name')
+        user_pass = request.form.get('user_pass')
+        user = UserInfo.query.filter(UserInfo.user_id == user_id).first()
+        user.user_name = user_name
+        user.user_pass = user_pass
+        db.session.commit()
+        return render_template('admin/manage_user.html', user_list = UserInfo.query.all())
 
-# 删除一位用户
-@admin.route('/delete_user/')
-@admin_required
-def delete_user():
-    user_id = request.args.get('user_id')
-    user = UserInfo.query.filter(UserInfo.user_id == user_id).first()
-    db.session.delete(user)
-    db.session.commit()
-    return redirect(url_for('admin.manage_user'))
+
+
+
 
 # 查看视频列表
 @admin.route('/manage_video/')

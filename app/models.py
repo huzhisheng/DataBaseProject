@@ -91,8 +91,8 @@ class VideoInfo(db.Model):
     
     # 删除视频时连带所有点赞记录也被删除 -- flask自带, 已被验证成功
 
-    # 删除视频时连带所有收藏记录也被删除
-    
+    # 删除视频时连带所有收藏记录也被删除 -- 已被验证成功
+    video_stars = db.relationship("StarRelation", backref="star_video", cascade="all, delete-orphan")
 # 定义视频评论模型
 class ReviewInfo(db.Model):
     __tablename__='review_info'
@@ -142,7 +142,6 @@ class StarRelation(db.Model):
     video_id = db.Column(db.Integer,db.ForeignKey('video_info.video_id'), nullable=False, primary_key=True)
 
     star_book = db.relationship("StarInfo", backref="star_records")
-    star_video = db.relationship("VideoInfo", backref="video_starers")
 
 # 定义关注模型
 class FansRelation(db.Model):
