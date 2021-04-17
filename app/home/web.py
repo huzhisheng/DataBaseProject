@@ -276,8 +276,16 @@ def video_modify():
 @login_required
 def video_delete(video_id):
     video = VideoInfo.query.filter(VideoInfo.video_id == video_id).first()
+    video_path = app.config['VIDEO_UPLOAD_FOLDER'] + video.video_url
+    img_path = app.config['POSTER_UPLOAD_FOLDER'] + video.video_poster.img_url
     db.session.delete(video)
     db.session.commit()
+
+    # 连带将视频文件和封面图片文件也删除
+    if os.path.exists(video_path):
+        os.remove(video_path)
+    if os.path.exists(img_path):
+        os.remove(img_path)
     return redirect(url_for('home.my_video_list'))
 
 # 全部私聊页面
