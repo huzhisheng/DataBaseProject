@@ -189,9 +189,13 @@ def star_video():
     user_id=session['user_id']
 
     star_rtime = datetime.now()
-    starRelation = StarRelation(star_id=star_id, star_rtime=star_rtime, video_id=video_id)
-    db.session.add(starRelation)
-    db.session.commit()
+    starRelation = StarRelation.query.filter(StarRelation.star_id==star_id, StarRelation.video_id==video_id).first()
+    if starRelation:
+        return redirect(url_for('home.detail',video_id = video_id))
+    else:
+        starRelation = StarRelation(star_id=star_id, star_rtime=star_rtime, video_id=video_id)
+        db.session.add(starRelation)
+        db.session.commit()
 
     return redirect(url_for('home.detail',video_id = video_id))
 
