@@ -20,6 +20,9 @@ HITSZ2021数据库实验
 
 ### 2.通过flask部署数据库
 
+- 先创建一个名为 "tiktok1" 的database（数据库名称要改的话需要到 app/config.py 文件中先修改一下）
+- use tiktok1
+
 - 在project根目录执行下列语句:
 
   ```python
@@ -30,7 +33,7 @@ HITSZ2021数据库实验
   quit
   ```
 
-
+- 再执行 Lab2/trigger.sql 文件创建相应触发器
 
 ## 启动服务器
 
@@ -40,4 +43,7 @@ HITSZ2021数据库实验
   python manage.py runserver
   ```
 
-  
+
+## 使用网站
+
+- 在浏览器中输入127.0.0.1:5000即可开始享用本视频网站
